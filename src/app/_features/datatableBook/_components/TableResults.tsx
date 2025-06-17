@@ -1,11 +1,11 @@
 import { ColumnDef, Table, flexRender } from '@tanstack/react-table';
-import { Profil } from '../schemas/Profil';
+import { Book } from '../schemas/Book';
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 type TableResultsProps = {
-  table: Table<Profil>;
+  table: Table<Book>;
   router: AppRouterInstance;
-  columns: ColumnDef<Profil>[];
+  columns: ColumnDef<Book>[];
 };
 export default function TableResults({
   table,
@@ -19,9 +19,7 @@ export default function TableResults({
           <TableRow
             key={row.id}
             data-state={row.getIsSelected() && 'selected'}
-            onClick={() =>
-              router.push(`/rentsUser/${row.original.id}`)
-            }
+            onClick={() => router.push(`/rentsBook/${row.original.id}`)}
             className='cursor-pointer hover:bg-muted transition'
           >
             {row.getVisibleCells().map((cell) => (

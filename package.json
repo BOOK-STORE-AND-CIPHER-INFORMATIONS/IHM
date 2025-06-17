@@ -1,12 +1,13 @@
 {
-  "name": "pedobserver",
+  "name": "ihm",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-api-services:dev": "openapi-generator-cli generate -g typescript-axios -i http://localhost:8080/api/docs.jsonopenapi -o services --remove-operation-id-prefix --skip-validate-spec -c openapitools.json;"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -20,6 +21,7 @@
     "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-slot": "^1.1.2",
     "@tanstack/react-table": "^8.21.2",
+    "axios": "^1.10.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.487.0",
