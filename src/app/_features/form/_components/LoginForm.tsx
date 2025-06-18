@@ -17,6 +17,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { loginFormSchema, type LoginFormValues } from '../schemas/loginSchema';
 
+const API_URL = 'http://127.0.0.1:8080';
+
+interface LoginResponse {
+  token: string;
+}
+
 export function LoginForm() {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
@@ -24,12 +30,11 @@ export function LoginForm() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
 
-  // Blocage initial de 2 secondes
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsReady(true);
@@ -40,20 +45,26 @@ export function LoginForm() {
 
   async function onSubmit(values: LoginFormValues) {
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: JSON.stringify(values), // values contient { username, password }
       });
 
       if (!res.ok) {
         const data = await res.json();
-        alert(data.message || 'Invalid credentials');
+        alert(data.message || 'Identifiants invalides');
         return;
       }
 
-      // Exemple : stockage d'un indicateur de connexion
-      localStorage.setItem('auth', 'true');
+      const data: LoginResponse = await res.json();
+
+      if (!data.token) {
+        alert('Token JWT manquant');
+        return;
+      }
+
+      localStorage.setItem('token', data.token);
       router.push('/users');
     } catch (err) {
       alert('Erreur lors de la connexion.');
@@ -70,10 +81,10 @@ export function LoginForm() {
 
         <FormField
           control={form.control}
-          name='email'
+          name='username'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Nom d'utilisateur</FormLabel>
               <FormControl>
                 <Input placeholder='username' disabled={!isReady} {...field} />
               </FormControl>
