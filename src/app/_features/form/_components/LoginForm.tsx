@@ -73,13 +73,9 @@ export function LoginForm() {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input
-                  placeholder='you@example.com'
-                  disabled={!isReady}
-                  {...field}
-                />
+                <Input placeholder='username' disabled={!isReady} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

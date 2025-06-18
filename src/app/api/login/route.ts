@@ -3,10 +3,10 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { email, password } = body;
+  const { username, password } = body;
 
   // Remplace ça par une vraie logique de vérification (BD, etc.)
-  if (email === 'admin@example.com' && password === 'admin123') {
+  if (username === 'admin@example.com' && password === 'admin123') {
     return NextResponse.json({ success: true }, { status: 200 });
   }
 

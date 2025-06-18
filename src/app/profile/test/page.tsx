@@ -2,95 +2,66 @@
 
 import React, { useEffect, useState } from 'react';
 
-// === Types ===
 interface LoginResponse {
   token: string;
 }
 
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  [key: string]: any;
-}
+const API_URL = 'http://127.0.0.1:8080'; // ou https selon ta config
 
-interface ApiBooksGetCollection200Response {
-  'hydra:member': Book[];
-  [key: string]: any;
-}
-
-// === Config ===
-const API_URL = 'http://localhost:8080';
-const HARDCODED_USERNAME = 'user';
-const HARDCODED_PASSWORD = 'user';
-
-// === Composant React simplifié ===
-export default function TestApiPage() {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [message, setMessage] = useState('');
+export default function TestApiLogin() {
+  const [token, setToken] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>('Connexion non lancée');
 
   useEffect(() => {
-    const loginAndFetchBooks = async () => {
+    const login = async () => {
+      setMessage('Connexion en cours...');
       try {
-        setMessage('Connexion en cours...');
-
-        const loginPayload = {
-          username: HARDCODED_USERNAME,
-          password: HARDCODED_PASSWORD,
-        };
-
-        const loginResponse = await fetch(`${API_URL}/api/login`, {
+        const response = await fetch(`${API_URL}/api/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(loginPayload),
+          body: JSON.stringify({
+            username: 'user',
+            password: 'user',
+          }),
+          redirect: 'follow', // suivre redirections (308)
         });
 
-        if (!loginResponse.ok) {
-          throw new Error(`Erreur login: ${loginResponse.status}`);
+        if (!response.ok) {
+          throw new Error(`Erreur login: ${response.status}`);
         }
 
-        const { token }: LoginResponse = await loginResponse.json();
+        const data: LoginResponse = await response.json();
 
-        if (!token) {
+        if (!data.token) {
           throw new Error('Token JWT manquant');
         }
 
-        setMessage('Connexion réussie, récupération des livres...');
-
-        const booksResponse = await fetch(`${API_URL}/api/books?page=1`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/ld+json',
-          },
-        });
-
-        if (!booksResponse.ok) {
-          throw new Error(`Erreur fetchBooks: ${booksResponse.status}`);
-        }
-
-        const data: ApiBooksGetCollection200Response =
-          await booksResponse.json();
-        setBooks(data['hydra:member'] || []);
-        setMessage(`Livres récupérés : ${data['hydra:member']?.length || 0}`);
+        setToken(data.token);
+        setMessage('Connexion réussie');
       } catch (error: any) {
         setMessage(`Erreur : ${error.message || error.toString()}`);
       }
     };
 
-    loginAndFetchBooks();
+    login();
   }, []);
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Test API Auto Login</h1>
+      <h1>Test Connexion API</h1>
       <p>{message}</p>
-      <ul>
-        {books.map((book) => (
-          <li key={book.id}>
-            <strong>{book.title}</strong> - {book.author || 'Auteur inconnu'}
-          </li>
-        ))}
-      </ul>
+      {token && (
+        <pre
+          style={{
+            background: '#eee',
+            padding: 10,
+            borderRadius: 5,
+            wordBreak: 'break-all',
+          }}
+        >
+          {token}
+        </pre>
+      )}
     </div>
   );
 }

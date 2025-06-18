@@ -18,7 +18,7 @@ import {
 } from '@tanstack/react-table';
 
 import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { fetchBooks } from './data/Books';
+import { data } from './data/Books';
 import Pagination from './_components/Pagination';
 import Filters from './_components/Filters';
 import TableResults from './_components/TableResults';
