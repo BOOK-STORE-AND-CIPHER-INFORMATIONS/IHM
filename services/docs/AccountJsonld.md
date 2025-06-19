@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **context** | [**AccountJsonldContext**](AccountJsonldContext.md) |  | [optional] [default to undefined]
 **id** | **string** |  | [optional] [readonly] [default to undefined]
 **type** | **string** |  | [optional] [readonly] [default to undefined]
+**id** | **string** |  | [default to undefined]
 **username** | **string** |  | [default to undefined]
 **password** | **string** |  | [default to undefined]
 **ipAddress** | **string** |  | [default to undefined]
@@ -25,6 +26,7 @@ const instance: AccountJsonld = {
     context,
     id,
     type,
+    id,
     username,
     password,
     ipAddress,

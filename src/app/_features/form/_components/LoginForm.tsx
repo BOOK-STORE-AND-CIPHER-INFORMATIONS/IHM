@@ -21,10 +21,12 @@ const API_URL = 'http://127.0.0.1:8080';
 
 interface LoginResponse {
   token: string;
+  roles?: string[];
 }
 
 export function LoginForm() {
   const [isReady, setIsReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const form = useForm<LoginFormValues>({
@@ -36,38 +38,42 @@ export function LoginForm() {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsReady(true);
-    }, 2000);
-
+    const timer = setTimeout(() => setIsReady(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 
   async function onSubmit(values: LoginFormValues) {
+    setError(null);
     try {
       const res = await fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values), // values contient { username, password }
+        body: JSON.stringify(values),
       });
-
-      if (!res.ok) {
-        const data = await res.json();
-        alert(data.message || 'Identifiants invalides');
-        return;
-      }
 
       const data: LoginResponse = await res.json();
 
-      if (!data.token) {
-        alert('Token JWT manquant');
-        return;
+      if (!res.ok) {
+        throw new Error(data?.message || 'Identifiants invalides');
       }
 
+      if (!data.token || !data.roles) {
+        throw new Error('Réponse invalide du serveur.');
+      }
+
+      const isAdmin = data.roles.includes('ROLE_ADMIN');
+      if (!isAdmin) {
+        throw new Error(
+          "Vous n'avez pas l'autorisation d'accéder à cette interface."
+        );
+      }
+
+      // ✅ Stocker le token seulement si ROLE_ADMIN
       localStorage.setItem('token', data.token);
-      router.push('/users');
-    } catch (err) {
-      alert('Erreur lors de la connexion.');
+      router.replace('/logs'); // ← évite l'historique inutile
+      router.refresh(); // ← rafraîchit les composants côté client
+    } catch (err: any) {
+      setError(err.message || 'Erreur de connexion');
     }
   }
 
@@ -78,6 +84,10 @@ export function LoginForm() {
         className='space-y-6 max-w-md mx-auto mt-10'
       >
         <h1 className='text-2xl font-semibold text-center'>Connexion</h1>
+
+        {error && (
+          <div className='text-red-500 text-center font-medium'>{error}</div>
+        )}
 
         <FormField
           control={form.control}

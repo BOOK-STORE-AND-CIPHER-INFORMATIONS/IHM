@@ -1,50 +1,68 @@
-import {
-  LoginCheckApi,
-  LoginCheckPostRequest,
-  BookApi,
-  Configuration,
-  ApiBooksGetCollection200Response,
-} from '../../../../../services';
+import { Book } from '../schemas/Book';
 
-const API_URL = 'http://localhost:8080';
+export const data: Book[] = [
+  {
+    id: 'ddd',
+    title: 'test',
+    author: 'jules vernes',
+    type: 'roman',
+    stock: 0,
+  },
+  {
+    id: 'dddss',
+    title: 'tessst',
+    author: 'jules vernes',
+    type: 'roman',
+    stock: 2,
+  },
+];
 
-let token: string | null = null;
+// import {
+//   LoginCheckApi,
+//   LoginCheckPostRequest,
+//   BookApi,
+//   Configuration,
+// } from '../../../../../services';
 
-const getConfig = () =>
-  new Configuration({
-    basePath: API_URL,
-    accessToken: () => (token ? `Bearer ${token}` : ''),
-  });
+// const API_URL = 'http://localhost:8080';
 
-export const login = async (
-  username: string,
-  password: string
-): Promise<void> => {
-  const loginApi = new LoginCheckApi(new Configuration({ basePath: API_URL }));
+// let token: string | null = null;
 
-  const loginPayload: LoginCheckPostRequest = {
-    username,
-    password,
-  };
+// const getConfig = () =>
+//   new Configuration({
+//     basePath: API_URL,
+//     accessToken: () => (token ? `Bearer ${token}` : ''),
+//   });
 
-  const response = await loginApi.checkPost(loginPayload);
-  console.log('Réponse complète login:', response);
+// export const login = async (
+//   username: string,
+//   password: string
+// ): Promise<void> => {
+//   const loginApi = new LoginCheckApi(new Configuration({ basePath: API_URL }));
 
-  token = response.data?.token;
+//   const loginPayload: LoginCheckPostRequest = {
+//     username,
+//     password,
+//   };
 
-  if (!token) {
-    throw new Error('Token JWT manquant');
-  }
-  console.log('Connexion réussie, token:', token);
-};
+//   const response = await loginApi.checkPost(loginPayload);
+//   console.log('Réponse complète login:', response);
 
-export const fetchBooks =
-  async (): Promise<ApiBooksGetCollection200Response> => {
-    if (!token) {
-      throw new Error('Vous devez être connecté pour accéder aux livres.');
-    }
+//   token = response.data?.token;
 
-    const bookApi = new BookApi(getConfig());
-    const response = await bookApi.booksGetCollection(1);
-    return response.data;
-  };
+//   if (!token) {
+//     throw new Error('Token JWT manquant');
+//   }
+//   console.log('Connexion réussie, token:', token);
+// };
+
+// export const fetchBooks =
+//   async (): Promise<ApiBooksGetCollection200Response> => {
+//     if (!token) {
+//       throw new Error('Vous devez être connecté pour accéder aux livres.');
+//     }
+
+//     const bookApi = new BookApi(getConfig());
+//     const response = await bookApi.booksGetCollection(1);
+//     return response.data;
+//   };

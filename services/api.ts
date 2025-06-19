@@ -14,14 +14,14 @@
 
 
 import type { Configuration } from './configuration';
-import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
 import type { RequestArgs } from './base';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
+import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -29,6 +29,12 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
  * @interface Account
  */
 export interface Account {
+    /**
+     * 
+     * @type {string}
+     * @memberof Account
+     */
+    'id': string;
     /**
      * 
      * @type {string}
@@ -95,6 +101,12 @@ export interface AccountJsonld {
      * @type {string}
      * @memberof AccountJsonld
      */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountJsonld
+     */
     'username': string;
     /**
      * 
@@ -139,7 +151,7 @@ export type AccountJsonldContext = AccountJsonldContextOneOf | string;
  * @interface AccountJsonldContextOneOf
  */
 export interface AccountJsonldContextOneOf {
-    [key: string]: any;
+    [key: string]: any | any;
 
     /**
      * 
@@ -161,235 +173,6 @@ export const AccountJsonldContextOneOfHydraEnum = {
 
 export type AccountJsonldContextOneOfHydraEnum = typeof AccountJsonldContextOneOfHydraEnum[keyof typeof AccountJsonldContextOneOfHydraEnum];
 
-/**
- * 
- * @export
- * @interface ApiAccountsGetCollection200Response
- */
-export interface ApiAccountsGetCollection200Response {
-    /**
-     * 
-     * @type {Array<AccountJsonld>}
-     * @memberof ApiAccountsGetCollection200Response
-     */
-    'member': Array<AccountJsonld>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiAccountsGetCollection200Response
-     */
-    'totalItems'?: number;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseView}
-     * @memberof ApiAccountsGetCollection200Response
-     */
-    'view'?: ApiAccountsGetCollection200ResponseView;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseSearch}
-     * @memberof ApiAccountsGetCollection200Response
-     */
-    'search'?: ApiAccountsGetCollection200ResponseSearch;
-}
-/**
- * 
- * @export
- * @interface ApiAccountsGetCollection200ResponseSearch
- */
-export interface ApiAccountsGetCollection200ResponseSearch {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseSearch
-     */
-    '@type'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseSearch
-     */
-    'template'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseSearch
-     */
-    'variableRepresentation'?: string;
-    /**
-     * 
-     * @type {Array<ApiAccountsGetCollection200ResponseSearchMappingInner>}
-     * @memberof ApiAccountsGetCollection200ResponseSearch
-     */
-    'mapping'?: Array<ApiAccountsGetCollection200ResponseSearchMappingInner>;
-}
-/**
- * 
- * @export
- * @interface ApiAccountsGetCollection200ResponseSearchMappingInner
- */
-export interface ApiAccountsGetCollection200ResponseSearchMappingInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseSearchMappingInner
-     */
-    '@type'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseSearchMappingInner
-     */
-    'variable'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseSearchMappingInner
-     */
-    'property'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ApiAccountsGetCollection200ResponseSearchMappingInner
-     */
-    'required'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ApiAccountsGetCollection200ResponseView
- */
-export interface ApiAccountsGetCollection200ResponseView {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseView
-     */
-    '@id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseView
-     */
-    '@type'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseView
-     */
-    'first'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseView
-     */
-    'last'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseView
-     */
-    'previous'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiAccountsGetCollection200ResponseView
-     */
-    'next'?: string;
-}
-/**
- * 
- * @export
- * @interface ApiBooksGetCollection200Response
- */
-export interface ApiBooksGetCollection200Response {
-    /**
-     * 
-     * @type {Array<BookJsonld>}
-     * @memberof ApiBooksGetCollection200Response
-     */
-    'member': Array<BookJsonld>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiBooksGetCollection200Response
-     */
-    'totalItems'?: number;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseView}
-     * @memberof ApiBooksGetCollection200Response
-     */
-    'view'?: ApiAccountsGetCollection200ResponseView;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseSearch}
-     * @memberof ApiBooksGetCollection200Response
-     */
-    'search'?: ApiAccountsGetCollection200ResponseSearch;
-}
-/**
- * 
- * @export
- * @interface ApiLogsGetCollection200Response
- */
-export interface ApiLogsGetCollection200Response {
-    /**
-     * 
-     * @type {Array<LogJsonld>}
-     * @memberof ApiLogsGetCollection200Response
-     */
-    'member': Array<LogJsonld>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiLogsGetCollection200Response
-     */
-    'totalItems'?: number;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseView}
-     * @memberof ApiLogsGetCollection200Response
-     */
-    'view'?: ApiAccountsGetCollection200ResponseView;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseSearch}
-     * @memberof ApiLogsGetCollection200Response
-     */
-    'search'?: ApiAccountsGetCollection200ResponseSearch;
-}
-/**
- * 
- * @export
- * @interface ApiRentsGetCollection200Response
- */
-export interface ApiRentsGetCollection200Response {
-    /**
-     * 
-     * @type {Array<RentJsonld>}
-     * @memberof ApiRentsGetCollection200Response
-     */
-    'member': Array<RentJsonld>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiRentsGetCollection200Response
-     */
-    'totalItems'?: number;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseView}
-     * @memberof ApiRentsGetCollection200Response
-     */
-    'view'?: ApiAccountsGetCollection200ResponseView;
-    /**
-     * 
-     * @type {ApiAccountsGetCollection200ResponseSearch}
-     * @memberof ApiRentsGetCollection200Response
-     */
-    'search'?: ApiAccountsGetCollection200ResponseSearch;
-}
 /**
  * 
  * @export
@@ -495,35 +278,54 @@ export interface BookJsonld {
     'rents'?: Array<string>;
 }
 /**
- * 
+ * Exchange client and server\'s public key and generate symmetric key for encrypting messages.
  * @export
- * @interface CommunicationPublicKeyOutputJsonld
+ * @interface CommunicationExchangeInputJsonld
  */
-export interface CommunicationPublicKeyOutputJsonld {
+export interface CommunicationExchangeInputJsonld {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommunicationExchangeInputJsonld
+     */
+    'publicKey'?: string;
+}
+/**
+ * Exchange client and server\'s public key and generate symmetric key for encrypting messages.
+ * @export
+ * @interface CommunicationExchangeOutputJsonld
+ */
+export interface CommunicationExchangeOutputJsonld {
     /**
      * 
      * @type {AccountJsonldContext}
-     * @memberof CommunicationPublicKeyOutputJsonld
+     * @memberof CommunicationExchangeOutputJsonld
      */
     '@context'?: AccountJsonldContext;
     /**
      * 
      * @type {string}
-     * @memberof CommunicationPublicKeyOutputJsonld
+     * @memberof CommunicationExchangeOutputJsonld
      */
     '@id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof CommunicationPublicKeyOutputJsonld
+     * @memberof CommunicationExchangeOutputJsonld
      */
     '@type'?: string;
     /**
      * 
      * @type {string}
-     * @memberof CommunicationPublicKeyOutputJsonld
+     * @memberof CommunicationExchangeOutputJsonld
      */
     'publicKey'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CommunicationExchangeOutputJsonld
+     */
+    'symmetricKey'?: string | null;
 }
 /**
  * Unprocessable entity
@@ -718,52 +520,9 @@ export interface ErrorJsonld {
 /**
  * 
  * @export
- * @interface Log
- */
-export interface Log {
-    /**
-     * 
-     * @type {string}
-     * @memberof Log
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Log
-     */
-    'account': string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Log
-     */
-    'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Log
-     */
-    'type': string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof Log
-     */
-    'data'?: { [key: string]: string; };
-}
-/**
- * 
- * @export
  * @interface LogJsonld
  */
 export interface LogJsonld {
-    /**
-     * 
-     * @type {AccountJsonldContext}
-     * @memberof LogJsonld
-     */
-    '@context'?: AccountJsonldContext;
     /**
      * 
      * @type {string}
@@ -985,6 +744,7 @@ export interface RentJsonld {
  * AccountApi - axios parameter creator
  * @export
  */
+
 export const AccountApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
@@ -994,7 +754,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsGetCollection: async (page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            accountsGetCollection: async (page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1027,57 +787,17 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Creates a Account resource.
-         * @summary Creates a Account resource.
-         * @param {AccountJsonld} accountJsonld The new Account resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsPost: async (accountJsonld: AccountJsonld, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'accountJsonld' is not null or undefined
-            assertParamExists('accountsPost', 'accountJsonld', accountJsonld)
-            const localVarPath = `/api/accounts`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(accountJsonld, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Removes the Account resource.
          * @summary Removes the Account resource.
-         * @param {string} username Account identifier
+         * @param {string} id Account identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsUsernameDelete: async (username: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'username' is not null or undefined
-            assertParamExists('accountsUsernameDelete', 'username', username)
-            const localVarPath = `/api/accounts/{username}`
-                .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+            accountsIdDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('accountsIdDelete', 'id', id)
+            const localVarPath = `/api/accounts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1107,15 +827,15 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Retrieves a Account resource.
          * @summary Retrieves a Account resource.
-         * @param {string} username Account identifier
+         * @param {string} id Account identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsUsernameGet: async (username: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'username' is not null or undefined
-            assertParamExists('accountsUsernameGet', 'username', username)
-            const localVarPath = `/api/accounts/{username}`
-                .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+            accountsIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('accountsIdGet', 'id', id)
+            const localVarPath = `/api/accounts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1145,18 +865,17 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Updates the Account resource.
          * @summary Updates the Account resource.
-         * @param {string} username Account identifier
-         * @param {Account} account The updated Account resource
+        * @param {string} id
+        * @param data any
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountsUsernamePatch: async (username: string, account: Account, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'username' is not null or undefined
-            assertParamExists('accountsUsernamePatch', 'username', username)
-            // verify required parameter 'account' is not null or undefined
-            assertParamExists('accountsUsernamePatch', 'account', account)
-            const localVarPath = `/api/accounts/{username}`
-                .replace(`{${"username"}}`, encodeURIComponent(String(username)));
+            accountsIdPatch: async (id: string, data?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('accountsIdPatch', 'id', id)
+            assertParamExists('accountsIdPatch', 'data', data)
+            const localVarPath = `/api/accounts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1174,12 +893,52 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/merge-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(account, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a Account resource.
+         * @summary Creates a Account resource.
+        * @param {any} [data] Encrypted request payload (base64 encoded)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+            accountsPost: async (data?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('accountsPost', 'data', data)
+            const localVarPath = `/api/accounts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1188,6 +947,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         },
     }
 };
+
 
 /**
  * AccountApi - functional programming interface
@@ -1203,127 +963,71 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsGetCollection(page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiAccountsGetCollection200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsGetCollection(page, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsGetCollection']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a Account resource.
-         * @summary Creates a Account resource.
-         * @param {AccountJsonld} accountJsonld The new Account resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async accountsPost(accountJsonld: AccountJsonld, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsPost(accountJsonld, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async accountsGetCollection(page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.accountsGetCollection(page, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Removes the Account resource.
          * @summary Removes the Account resource.
-         * @param {string} username Account identifier
+         * @param {string} id Account identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsUsernameDelete(username: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsUsernameDelete(username, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsUsernameDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async accountsIdDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.accountsIdDelete(id, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Retrieves a Account resource.
          * @summary Retrieves a Account resource.
-         * @param {string} username Account identifier
+         * @param {string} id Account identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsUsernameGet(username: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsUsernameGet(username, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsUsernameGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async accountsIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.accountsIdGet(id, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Updates the Account resource.
          * @summary Updates the Account resource.
-         * @param {string} username Account identifier
-         * @param {Account} account The updated Account resource
+                    * @param {string} id
+                    * @param data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async accountsUsernamePatch(username: string, account: Account, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accountsUsernamePatch(username, account, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountApi.accountsUsernamePatch']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+                async accountsIdPatch(id: string, data?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.accountsIdPatch(id, data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Creates a Account resource.
+         * @summary Creates a Account resource.
+                    * @param {any} [data] Encrypted request payload (base64 encoded)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+
+                async accountsPost(data?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.accountsPost(data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
-};
-
-/**
- * AccountApi - factory interface
- * @export
- */
-export const AccountApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AccountApiFp(configuration)
-    return {
-        /**
-         * Retrieves the collection of Account resources.
-         * @summary Retrieves the collection of Account resources.
-         * @param {number} [page] The collection page number
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsGetCollection(page?: number, options?: RawAxiosRequestConfig): AxiosPromise<ApiAccountsGetCollection200Response> {
-            return localVarFp.accountsGetCollection(page, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a Account resource.
-         * @summary Creates a Account resource.
-         * @param {AccountJsonld} accountJsonld The new Account resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsPost(accountJsonld: AccountJsonld, options?: RawAxiosRequestConfig): AxiosPromise<AccountJsonld> {
-            return localVarFp.accountsPost(accountJsonld, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes the Account resource.
-         * @summary Removes the Account resource.
-         * @param {string} username Account identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsUsernameDelete(username: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.accountsUsernameDelete(username, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Retrieves a Account resource.
-         * @summary Retrieves a Account resource.
-         * @param {string} username Account identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsUsernameGet(username: string, options?: RawAxiosRequestConfig): AxiosPromise<AccountJsonld> {
-            return localVarFp.accountsUsernameGet(username, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates the Account resource.
-         * @summary Updates the Account resource.
-         * @param {string} username Account identifier
-         * @param {Account} account The updated Account resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accountsUsernamePatch(username: string, account: Account, options?: RawAxiosRequestConfig): AxiosPromise<AccountJsonld> {
-            return localVarFp.accountsUsernamePatch(username, account, options).then((request) => request(axios, basePath));
-        },
-    };
 };
 
 /**
@@ -1341,57 +1045,57 @@ export class AccountApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AccountApi
      */
-    public accountsGetCollection(page?: number, options?: RawAxiosRequestConfig) {
+    public accountsGetCollection(page?: number, options?: AxiosRequestConfig) {
         return AccountApiFp(this.configuration).accountsGetCollection(page, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a Account resource.
-     * @summary Creates a Account resource.
-     * @param {AccountJsonld} accountJsonld The new Account resource
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountApi
-     */
-    public accountsPost(accountJsonld: AccountJsonld, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsPost(accountJsonld, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes the Account resource.
      * @summary Removes the Account resource.
-     * @param {string} username Account identifier
+     * @param {string} id Account identifier
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
-    public accountsUsernameDelete(username: string, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsUsernameDelete(username, options).then((request) => request(this.axios, this.basePath));
+    public accountsIdDelete(id: string, options?: AxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Retrieves a Account resource.
      * @summary Retrieves a Account resource.
-     * @param {string} username Account identifier
+     * @param {string} id Account identifier
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
-    public accountsUsernameGet(username: string, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsUsernameGet(username, options).then((request) => request(this.axios, this.basePath));
+    public accountsIdGet(id: string, options?: AxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates the Account resource.
      * @summary Updates the Account resource.
-     * @param {string} username Account identifier
-     * @param {Account} account The updated Account resource
+     * @param {string} id Account identifier
+     * @param {any} [body] Encrypted request payload (base64 encoded)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi
      */
-    public accountsUsernamePatch(username: string, account: Account, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).accountsUsernamePatch(username, account, options).then((request) => request(this.axios, this.basePath));
+    public accountsIdPatch(id: string, body?: any, options?: AxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsIdPatch(id, body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a Account resource.
+     * @summary Creates a Account resource.
+     * @param {any} [body] Encrypted request payload (base64 encoded)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountApi
+     */
+    public accountsPost(body?: any, options?: AxiosRequestConfig) {
+        return AccountApiFp(this.configuration).accountsPost(body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1401,6 +1105,7 @@ export class AccountApi extends BaseAPI {
  * BookApi - axios parameter creator
  * @export
  */
+
 export const BookApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
@@ -1410,7 +1115,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksGetCollection: async (page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            booksGetCollection: async (page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/books`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1449,7 +1154,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            booksIdDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('booksIdDelete', 'id', id)
             const localVarPath = `/api/books/{id}`
@@ -1487,7 +1192,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            booksIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('booksIdGet', 'id', id)
             const localVarPath = `/api/books/{id}`
@@ -1521,16 +1226,15 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Updates the Book resource.
          * @summary Updates the Book resource.
-         * @param {string} id Book identifier
-         * @param {Book} book The updated Book resource
+        * @param {string} id
+        * @param data any
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksIdPatch: async (id: string, book: Book, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
+            booksIdPatch: async (id: string, data?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
             assertParamExists('booksIdPatch', 'id', id)
-            // verify required parameter 'book' is not null or undefined
-            assertParamExists('booksIdPatch', 'book', book)
+            assertParamExists('booksIdPatch', 'data', data)
             const localVarPath = `/api/books/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1550,12 +1254,55 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/merge-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(book, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces the Book resource.
+         * @summary Replaces the Book resource.
+        * @param {string} id
+        * @param data any
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+            booksIdPut: async (id: string, data?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('booksIdPut', 'id', id)
+            assertParamExists('booksIdPut', 'data', data)
+            const localVarPath = `/api/books/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1565,13 +1312,13 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Creates a Book resource.
          * @summary Creates a Book resource.
-         * @param {BookJsonld} bookJsonld The new Book resource
+        * @param {any} [data] Encrypted request payload (base64 encoded)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        booksPost: async (bookJsonld: BookJsonld, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bookJsonld' is not null or undefined
-            assertParamExists('booksPost', 'bookJsonld', bookJsonld)
+            booksPost: async (data?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('booksPost', 'data', data)
             const localVarPath = `/api/books`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1595,7 +1342,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(bookJsonld, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1604,6 +1351,7 @@ export const BookApiAxiosParamCreator = function (configuration?: Configuration)
         },
     }
 };
+
 
 /**
  * BookApi - functional programming interface
@@ -1619,11 +1367,12 @@ export const BookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async booksGetCollection(page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiBooksGetCollection200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.booksGetCollection(page, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookApi.booksGetCollection']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async booksGetCollection(page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.booksGetCollection(page, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Removes the Book resource.
@@ -1632,11 +1381,12 @@ export const BookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async booksIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.booksIdDelete(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookApi.booksIdDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async booksIdDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.booksIdDelete(id, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Retrieves a Book resource.
@@ -1645,101 +1395,58 @@ export const BookApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async booksIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.booksIdGet(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookApi.booksIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async booksIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.booksIdGet(id, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Updates the Book resource.
          * @summary Updates the Book resource.
-         * @param {string} id Book identifier
-         * @param {Book} book The updated Book resource
+                    * @param {string} id
+                    * @param data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async booksIdPatch(id: string, book: Book, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.booksIdPatch(id, book, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookApi.booksIdPatch']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+                async booksIdPatch(id: string, data?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.booksIdPatch(id, data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Replaces the Book resource.
+         * @summary Replaces the Book resource.
+                    * @param {string} id
+                    * @param data
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+
+                async booksIdPut(id: string, data?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.booksIdPut(id, data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Creates a Book resource.
          * @summary Creates a Book resource.
-         * @param {BookJsonld} bookJsonld The new Book resource
+                    * @param {any} [data] Encrypted request payload (base64 encoded)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async booksPost(bookJsonld: BookJsonld, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.booksPost(bookJsonld, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookApi.booksPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+                async booksPost(data?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.booksPost(data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
-};
-
-/**
- * BookApi - factory interface
- * @export
- */
-export const BookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = BookApiFp(configuration)
-    return {
-        /**
-         * Retrieves the collection of Book resources.
-         * @summary Retrieves the collection of Book resources.
-         * @param {number} [page] The collection page number
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksGetCollection(page?: number, options?: RawAxiosRequestConfig): AxiosPromise<ApiBooksGetCollection200Response> {
-            return localVarFp.booksGetCollection(page, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes the Book resource.
-         * @summary Removes the Book resource.
-         * @param {string} id Book identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.booksIdDelete(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Retrieves a Book resource.
-         * @summary Retrieves a Book resource.
-         * @param {string} id Book identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<BookJsonld> {
-            return localVarFp.booksIdGet(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates the Book resource.
-         * @summary Updates the Book resource.
-         * @param {string} id Book identifier
-         * @param {Book} book The updated Book resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksIdPatch(id: string, book: Book, options?: RawAxiosRequestConfig): AxiosPromise<BookJsonld> {
-            return localVarFp.booksIdPatch(id, book, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a Book resource.
-         * @summary Creates a Book resource.
-         * @param {BookJsonld} bookJsonld The new Book resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        booksPost(bookJsonld: BookJsonld, options?: RawAxiosRequestConfig): AxiosPromise<BookJsonld> {
-            return localVarFp.booksPost(bookJsonld, options).then((request) => request(axios, basePath));
-        },
-    };
 };
 
 /**
@@ -1757,7 +1464,7 @@ export class BookApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public booksGetCollection(page?: number, options?: RawAxiosRequestConfig) {
+    public booksGetCollection(page?: number, options?: AxiosRequestConfig) {
         return BookApiFp(this.configuration).booksGetCollection(page, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1769,7 +1476,7 @@ export class BookApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public booksIdDelete(id: string, options?: RawAxiosRequestConfig) {
+    public booksIdDelete(id: string, options?: AxiosRequestConfig) {
         return BookApiFp(this.configuration).booksIdDelete(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1781,7 +1488,7 @@ export class BookApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public booksIdGet(id: string, options?: RawAxiosRequestConfig) {
+    public booksIdGet(id: string, options?: AxiosRequestConfig) {
         return BookApiFp(this.configuration).booksIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1789,25 +1496,38 @@ export class BookApi extends BaseAPI {
      * Updates the Book resource.
      * @summary Updates the Book resource.
      * @param {string} id Book identifier
-     * @param {Book} book The updated Book resource
+     * @param {any} [body] Encrypted request payload (base64 encoded)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public booksIdPatch(id: string, book: Book, options?: RawAxiosRequestConfig) {
-        return BookApiFp(this.configuration).booksIdPatch(id, book, options).then((request) => request(this.axios, this.basePath));
+    public booksIdPatch(id: string, body?: any, options?: AxiosRequestConfig) {
+        return BookApiFp(this.configuration).booksIdPatch(id, body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the Book resource.
+     * @summary Replaces the Book resource.
+     * @param {string} id Book identifier
+     * @param {any} [body] Encrypted request payload (base64 encoded)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookApi
+     */
+    public booksIdPut(id: string, body?: any, options?: AxiosRequestConfig) {
+        return BookApiFp(this.configuration).booksIdPut(id, body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a Book resource.
      * @summary Creates a Book resource.
-     * @param {BookJsonld} bookJsonld The new Book resource
+     * @param {any} [body] Encrypted request payload (base64 encoded)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookApi
      */
-    public booksPost(bookJsonld: BookJsonld, options?: RawAxiosRequestConfig) {
-        return BookApiFp(this.configuration).booksPost(bookJsonld, options).then((request) => request(this.axios, this.basePath));
+    public booksPost(body?: any, options?: AxiosRequestConfig) {
+        return BookApiFp(this.configuration).booksPost(body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1817,16 +1537,20 @@ export class BookApi extends BaseAPI {
  * CommunicationApi - axios parameter creator
  * @export
  */
+
 export const CommunicationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Retrieves a Communication resource.
-         * @summary Retrieves a Communication resource.
+         * Creates a Communication resource.
+         * @summary Creates a Communication resource.
+        * @param {CommunicationExchangeInputJsonld} data The new Communication resource
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publicKeyGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/public_key`;
+            exchangePost: async (data: CommunicationExchangeInputJsonld, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'communicationExchangeInputJsonld' is not null or undefined
+            assertParamExists('exchangePost', 'data', data)
+            const localVarPath = `/api/exchange`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1834,7 +1558,7 @@ export const CommunicationApiAxiosParamCreator = function (configuration?: Confi
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1844,9 +1568,12 @@ export const CommunicationApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1856,6 +1583,7 @@ export const CommunicationApiAxiosParamCreator = function (configuration?: Confi
     }
 };
 
+
 /**
  * CommunicationApi - functional programming interface
  * @export
@@ -1864,37 +1592,20 @@ export const CommunicationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CommunicationApiAxiosParamCreator(configuration)
     return {
         /**
-         * Retrieves a Communication resource.
-         * @summary Retrieves a Communication resource.
+         * Creates a Communication resource.
+         * @summary Creates a Communication resource.
+                    * @param {CommunicationExchangeInputJsonld} data The new Communication resource
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async publicKeyGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommunicationPublicKeyOutputJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.publicKeyGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommunicationApi.publicKeyGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+                async exchangePost(data: CommunicationExchangeInputJsonld, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommunicationExchangeOutputJsonld>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.exchangePost(data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
-};
-
-/**
- * CommunicationApi - factory interface
- * @export
- */
-export const CommunicationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = CommunicationApiFp(configuration)
-    return {
-        /**
-         * Retrieves a Communication resource.
-         * @summary Retrieves a Communication resource.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publicKeyGet(options?: RawAxiosRequestConfig): AxiosPromise<CommunicationPublicKeyOutputJsonld> {
-            return localVarFp.publicKeyGet(options).then((request) => request(axios, basePath));
-        },
-    };
 };
 
 /**
@@ -1905,14 +1616,15 @@ export const CommunicationApiFactory = function (configuration?: Configuration, 
  */
 export class CommunicationApi extends BaseAPI {
     /**
-     * Retrieves a Communication resource.
-     * @summary Retrieves a Communication resource.
+     * Creates a Communication resource.
+     * @summary Creates a Communication resource.
+     * @param {CommunicationExchangeInputJsonld} communicationExchangeInputJsonld The new Communication resource
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommunicationApi
      */
-    public publicKeyGet(options?: RawAxiosRequestConfig) {
-        return CommunicationApiFp(this.configuration).publicKeyGet(options).then((request) => request(this.axios, this.basePath));
+    public exchangePost(communicationExchangeInputJsonld: CommunicationExchangeInputJsonld, options?: AxiosRequestConfig) {
+        return CommunicationApiFp(this.configuration).exchangePost(communicationExchangeInputJsonld, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1922,17 +1634,22 @@ export class CommunicationApi extends BaseAPI {
  * LogApi - axios parameter creator
  * @export
  */
+
 export const LogApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Retrieves the collection of Log resources.
          * @summary Retrieves the collection of Log resources.
+         * @param {string} accountId Log identifier
          * @param {number} [page] The collection page number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logsGetCollection: async (page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/logs`;
+            accountsAccountIdlogsGetCollection: async (accountId: string, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            assertParamExists('accountsAccountIdlogsGetCollection', 'accountId', accountId)
+            const localVarPath = `/api/accounts/{account_id}/logs`
+                .replace(`{${"account_id"}}`, encodeURIComponent(String(accountId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1964,55 +1681,14 @@ export const LogApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes the Log resource.
-         * @summary Removes the Log resource.
-         * @param {string} id Log identifier
+         * Retrieves the collection of Log resources.
+         * @summary Retrieves the collection of Log resources.
+         * @param {number} [page] The collection page number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logsIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('logsIdDelete', 'id', id)
-            const localVarPath = `/api/logs/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieves a Log resource.
-         * @summary Retrieves a Log resource.
-         * @param {string} id Log identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        logsIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('logsIdGet', 'id', id)
-            const localVarPath = `/api/logs/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            logsGetCollection: async (page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/logs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2028,95 +1704,15 @@ export const LogApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Updates the Log resource.
-         * @summary Updates the Log resource.
-         * @param {string} id Log identifier
-         * @param {Log} log The updated Log resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        logsIdPatch: async (id: string, log: Log, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('logsIdPatch', 'id', id)
-            // verify required parameter 'log' is not null or undefined
-            assertParamExists('logsIdPatch', 'log', log)
-            const localVarPath = `/api/logs/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
             }
 
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/merge-patch+json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(log, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a Log resource.
-         * @summary Creates a Log resource.
-         * @param {LogJsonld} logJsonld The new Log resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        logsPost: async (logJsonld: LogJsonld, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'logJsonld' is not null or undefined
-            assertParamExists('logsPost', 'logJsonld', logJsonld)
-            const localVarPath = `/api/logs`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(logJsonld, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2125,6 +1721,7 @@ export const LogApiAxiosParamCreator = function (configuration?: Configuration) 
         },
     }
 };
+
 
 /**
  * LogApi - functional programming interface
@@ -2136,79 +1733,18 @@ export const LogApiFp = function(configuration?: Configuration) {
         /**
          * Retrieves the collection of Log resources.
          * @summary Retrieves the collection of Log resources.
+         * @param {string} accountId Log identifier
          * @param {number} [page] The collection page number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async logsGetCollection(page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiLogsGetCollection200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.logsGetCollection(page, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogApi.logsGetCollection']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes the Log resource.
-         * @summary Removes the Log resource.
-         * @param {string} id Log identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async logsIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.logsIdDelete(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogApi.logsIdDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Retrieves a Log resource.
-         * @summary Retrieves a Log resource.
-         * @param {string} id Log identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async logsIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.logsIdGet(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogApi.logsIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Updates the Log resource.
-         * @summary Updates the Log resource.
-         * @param {string} id Log identifier
-         * @param {Log} log The updated Log resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async logsIdPatch(id: string, log: Log, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.logsIdPatch(id, log, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogApi.logsIdPatch']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a Log resource.
-         * @summary Creates a Log resource.
-         * @param {LogJsonld} logJsonld The new Log resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async logsPost(logJsonld: LogJsonld, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.logsPost(logJsonld, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogApi.logsPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
 
-/**
- * LogApi - factory interface
- * @export
- */
-export const LogApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = LogApiFp(configuration)
-    return {
+
+        async accountsAccountIdlogsGetCollection(accountId: string, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.accountsAccountIdlogsGetCollection(accountId, page, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * Retrieves the collection of Log resources.
          * @summary Retrieves the collection of Log resources.
@@ -2216,51 +1752,14 @@ export const LogApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logsGetCollection(page?: number, options?: RawAxiosRequestConfig): AxiosPromise<ApiLogsGetCollection200Response> {
-            return localVarFp.logsGetCollection(page, options).then((request) => request(axios, basePath));
+
+
+        async logsGetCollection(page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.logsGetCollection(page, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * Removes the Log resource.
-         * @summary Removes the Log resource.
-         * @param {string} id Log identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        logsIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.logsIdDelete(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Retrieves a Log resource.
-         * @summary Retrieves a Log resource.
-         * @param {string} id Log identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        logsIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<LogJsonld> {
-            return localVarFp.logsIdGet(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates the Log resource.
-         * @summary Updates the Log resource.
-         * @param {string} id Log identifier
-         * @param {Log} log The updated Log resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        logsIdPatch(id: string, log: Log, options?: RawAxiosRequestConfig): AxiosPromise<LogJsonld> {
-            return localVarFp.logsIdPatch(id, log, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a Log resource.
-         * @summary Creates a Log resource.
-         * @param {LogJsonld} logJsonld The new Log resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        logsPost(logJsonld: LogJsonld, options?: RawAxiosRequestConfig): AxiosPromise<LogJsonld> {
-            return localVarFp.logsPost(logJsonld, options).then((request) => request(axios, basePath));
-        },
-    };
+    }
 };
 
 /**
@@ -2273,62 +1772,26 @@ export class LogApi extends BaseAPI {
     /**
      * Retrieves the collection of Log resources.
      * @summary Retrieves the collection of Log resources.
+     * @param {string} accountId Log identifier
      * @param {number} [page] The collection page number
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LogApi
      */
-    public logsGetCollection(page?: number, options?: RawAxiosRequestConfig) {
+    public accountsAccountIdlogsGetCollection(accountId: string, page?: number, options?: AxiosRequestConfig) {
+        return LogApiFp(this.configuration).accountsAccountIdlogsGetCollection(accountId, page, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieves the collection of Log resources.
+     * @summary Retrieves the collection of Log resources.
+     * @param {number} [page] The collection page number
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LogApi
+     */
+    public logsGetCollection(page?: number, options?: AxiosRequestConfig) {
         return LogApiFp(this.configuration).logsGetCollection(page, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes the Log resource.
-     * @summary Removes the Log resource.
-     * @param {string} id Log identifier
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LogApi
-     */
-    public logsIdDelete(id: string, options?: RawAxiosRequestConfig) {
-        return LogApiFp(this.configuration).logsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Retrieves a Log resource.
-     * @summary Retrieves a Log resource.
-     * @param {string} id Log identifier
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LogApi
-     */
-    public logsIdGet(id: string, options?: RawAxiosRequestConfig) {
-        return LogApiFp(this.configuration).logsIdGet(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Updates the Log resource.
-     * @summary Updates the Log resource.
-     * @param {string} id Log identifier
-     * @param {Log} log The updated Log resource
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LogApi
-     */
-    public logsIdPatch(id: string, log: Log, options?: RawAxiosRequestConfig) {
-        return LogApiFp(this.configuration).logsIdPatch(id, log, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a Log resource.
-     * @summary Creates a Log resource.
-     * @param {LogJsonld} logJsonld The new Log resource
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LogApi
-     */
-    public logsPost(logJsonld: LogJsonld, options?: RawAxiosRequestConfig) {
-        return LogApiFp(this.configuration).logsPost(logJsonld, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2338,18 +1801,19 @@ export class LogApi extends BaseAPI {
  * LoginCheckApi - axios parameter creator
  * @export
  */
+
 export const LoginCheckApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Creates a user token.
          * @summary Creates a user token.
-         * @param {LoginCheckPostRequest} loginCheckPostRequest The login data
+        * @param {LoginCheckPostRequest} data The login data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkPost: async (loginCheckPostRequest: LoginCheckPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            checkPost: async (data: LoginCheckPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'loginCheckPostRequest' is not null or undefined
-            assertParamExists('checkPost', 'loginCheckPostRequest', loginCheckPostRequest)
+            assertParamExists('checkPost', 'data', data)
             const localVarPath = `/api/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2373,7 +1837,7 @@ export const LoginCheckApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(loginCheckPostRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2382,6 +1846,7 @@ export const LoginCheckApiAxiosParamCreator = function (configuration?: Configur
         },
     }
 };
+
 
 /**
  * LoginCheckApi - functional programming interface
@@ -2393,37 +1858,18 @@ export const LoginCheckApiFp = function(configuration?: Configuration) {
         /**
          * Creates a user token.
          * @summary Creates a user token.
-         * @param {LoginCheckPostRequest} loginCheckPostRequest The login data
+                    * @param {LoginCheckPostRequest} data The login data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkPost(loginCheckPostRequest: LoginCheckPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginCheckPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.checkPost(loginCheckPostRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LoginCheckApi.checkPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+                async checkPost(data: LoginCheckPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginCheckPost200Response>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.checkPost(data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
-};
-
-/**
- * LoginCheckApi - factory interface
- * @export
- */
-export const LoginCheckApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = LoginCheckApiFp(configuration)
-    return {
-        /**
-         * Creates a user token.
-         * @summary Creates a user token.
-         * @param {LoginCheckPostRequest} loginCheckPostRequest The login data
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        checkPost(loginCheckPostRequest: LoginCheckPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<LoginCheckPost200Response> {
-            return localVarFp.checkPost(loginCheckPostRequest, options).then((request) => request(axios, basePath));
-        },
-    };
 };
 
 /**
@@ -2441,7 +1887,7 @@ export class LoginCheckApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LoginCheckApi
      */
-    public checkPost(loginCheckPostRequest: LoginCheckPostRequest, options?: RawAxiosRequestConfig) {
+    public checkPost(loginCheckPostRequest: LoginCheckPostRequest, options?: AxiosRequestConfig) {
         return LoginCheckApiFp(this.configuration).checkPost(loginCheckPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -2452,6 +1898,7 @@ export class LoginCheckApi extends BaseAPI {
  * RentApi - axios parameter creator
  * @export
  */
+
 export const RentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
@@ -2461,7 +1908,7 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rentsGetCollection: async (page?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            rentsGetCollection: async (page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/rents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2500,7 +1947,7 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rentsIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            rentsIdDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('rentsIdDelete', 'id', id)
             const localVarPath = `/api/rents/{id}`
@@ -2538,7 +1985,7 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rentsIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            rentsIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('rentsIdGet', 'id', id)
             const localVarPath = `/api/rents/{id}`
@@ -2572,16 +2019,15 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Updates the Rent resource.
          * @summary Updates the Rent resource.
-         * @param {string} id Rent identifier
-         * @param {Rent} rent The updated Rent resource
+        * @param {string} id
+        * @param data any
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rentsIdPatch: async (id: string, rent: Rent, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
+            rentsIdPatch: async (id: string, data?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
             assertParamExists('rentsIdPatch', 'id', id)
-            // verify required parameter 'rent' is not null or undefined
-            assertParamExists('rentsIdPatch', 'rent', rent)
+            assertParamExists('rentsIdPatch', 'data', data)
             const localVarPath = `/api/rents/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2601,12 +2047,12 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/merge-patch+json';
+            localVarHeaderParameter['Content-Type'] = 'application/ld+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(rent, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2616,13 +2062,13 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Creates a Rent resource.
          * @summary Creates a Rent resource.
-         * @param {RentJsonld} rentJsonld The new Rent resource
+        * @param {any} [data] Encrypted request payload (base64 encoded)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rentsPost: async (rentJsonld: RentJsonld, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'rentJsonld' is not null or undefined
-            assertParamExists('rentsPost', 'rentJsonld', rentJsonld)
+            rentsPost: async (data?: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('rentsPost', 'data', data)
             const localVarPath = `/api/rents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2646,7 +2092,7 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(rentJsonld, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(data, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2655,6 +2101,7 @@ export const RentApiAxiosParamCreator = function (configuration?: Configuration)
         },
     }
 };
+
 
 /**
  * RentApi - functional programming interface
@@ -2670,11 +2117,12 @@ export const RentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rentsGetCollection(page?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiRentsGetCollection200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rentsGetCollection(page, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RentApi.rentsGetCollection']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async rentsGetCollection(page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.rentsGetCollection(page, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Removes the Rent resource.
@@ -2683,11 +2131,12 @@ export const RentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rentsIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rentsIdDelete(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RentApi.rentsIdDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async rentsIdDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.rentsIdDelete(id, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Retrieves a Rent resource.
@@ -2696,101 +2145,43 @@ export const RentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rentsIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RentJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rentsIdGet(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RentApi.rentsIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+
+        async rentsIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+                const localVarAxiosArgs = await localVarAxiosParamCreator.rentsIdGet(id, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Updates the Rent resource.
          * @summary Updates the Rent resource.
-         * @param {string} id Rent identifier
-         * @param {Rent} rent The updated Rent resource
+                    * @param {string} id
+                    * @param data
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rentsIdPatch(id: string, rent: Rent, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RentJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rentsIdPatch(id, rent, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RentApi.rentsIdPatch']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+                async rentsIdPatch(id: string, data?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.rentsIdPatch(id, data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Creates a Rent resource.
          * @summary Creates a Rent resource.
-         * @param {RentJsonld} rentJsonld The new Rent resource
+                    * @param {any} [data] Encrypted request payload (base64 encoded)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rentsPost(rentJsonld: RentJsonld, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RentJsonld>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rentsPost(rentJsonld, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RentApi.rentsPost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+
+                async rentsPost(data?: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+
+                const localVarAxiosArgs = await localVarAxiosParamCreator.rentsPost(data, options);
+
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
-};
-
-/**
- * RentApi - factory interface
- * @export
- */
-export const RentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = RentApiFp(configuration)
-    return {
-        /**
-         * Retrieves the collection of Rent resources.
-         * @summary Retrieves the collection of Rent resources.
-         * @param {number} [page] The collection page number
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rentsGetCollection(page?: number, options?: RawAxiosRequestConfig): AxiosPromise<ApiRentsGetCollection200Response> {
-            return localVarFp.rentsGetCollection(page, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes the Rent resource.
-         * @summary Removes the Rent resource.
-         * @param {string} id Rent identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rentsIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.rentsIdDelete(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Retrieves a Rent resource.
-         * @summary Retrieves a Rent resource.
-         * @param {string} id Rent identifier
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rentsIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<RentJsonld> {
-            return localVarFp.rentsIdGet(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates the Rent resource.
-         * @summary Updates the Rent resource.
-         * @param {string} id Rent identifier
-         * @param {Rent} rent The updated Rent resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rentsIdPatch(id: string, rent: Rent, options?: RawAxiosRequestConfig): AxiosPromise<RentJsonld> {
-            return localVarFp.rentsIdPatch(id, rent, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a Rent resource.
-         * @summary Creates a Rent resource.
-         * @param {RentJsonld} rentJsonld The new Rent resource
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rentsPost(rentJsonld: RentJsonld, options?: RawAxiosRequestConfig): AxiosPromise<RentJsonld> {
-            return localVarFp.rentsPost(rentJsonld, options).then((request) => request(axios, basePath));
-        },
-    };
 };
 
 /**
@@ -2808,7 +2199,7 @@ export class RentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RentApi
      */
-    public rentsGetCollection(page?: number, options?: RawAxiosRequestConfig) {
+    public rentsGetCollection(page?: number, options?: AxiosRequestConfig) {
         return RentApiFp(this.configuration).rentsGetCollection(page, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2820,7 +2211,7 @@ export class RentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RentApi
      */
-    public rentsIdDelete(id: string, options?: RawAxiosRequestConfig) {
+    public rentsIdDelete(id: string, options?: AxiosRequestConfig) {
         return RentApiFp(this.configuration).rentsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2832,7 +2223,7 @@ export class RentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RentApi
      */
-    public rentsIdGet(id: string, options?: RawAxiosRequestConfig) {
+    public rentsIdGet(id: string, options?: AxiosRequestConfig) {
         return RentApiFp(this.configuration).rentsIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2840,25 +2231,25 @@ export class RentApi extends BaseAPI {
      * Updates the Rent resource.
      * @summary Updates the Rent resource.
      * @param {string} id Rent identifier
-     * @param {Rent} rent The updated Rent resource
+     * @param {any} [body] Encrypted request payload (base64 encoded)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RentApi
      */
-    public rentsIdPatch(id: string, rent: Rent, options?: RawAxiosRequestConfig) {
-        return RentApiFp(this.configuration).rentsIdPatch(id, rent, options).then((request) => request(this.axios, this.basePath));
+    public rentsIdPatch(id: string, body?: any, options?: AxiosRequestConfig) {
+        return RentApiFp(this.configuration).rentsIdPatch(id, body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a Rent resource.
      * @summary Creates a Rent resource.
-     * @param {RentJsonld} rentJsonld The new Rent resource
+     * @param {any} [body] Encrypted request payload (base64 encoded)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RentApi
      */
-    public rentsPost(rentJsonld: RentJsonld, options?: RawAxiosRequestConfig) {
-        return RentApiFp(this.configuration).rentsPost(rentJsonld, options).then((request) => request(this.axios, this.basePath));
+    public rentsPost(body?: any, options?: AxiosRequestConfig) {
+        return RentApiFp(this.configuration).rentsPost(body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

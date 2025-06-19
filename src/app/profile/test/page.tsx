@@ -1,67 +1,57 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Configuration, LogApiAxiosParamCreator } from '../../../../services';
 
-interface LoginResponse {
-  token: string;
-}
-
-const API_URL = 'http://127.0.0.1:8080'; // ou https selon ta config
-
-export default function TestApiLogin() {
-  const [token, setToken] = useState<string | null>(null);
-  const [message, setMessage] = useState<string>('Connexion non lancée');
+export default function SelfProfile() {
+  const [profile, setProfile] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const login = async () => {
-      setMessage('Connexion en cours...');
+    const fetchSelf = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Aucun token trouvé dans le localStorage');
+        return;
+      }
+
       try {
-        const response = await fetch(`${API_URL}/api/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: 'user',
-            password: 'user',
-          }),
-          redirect: 'follow', // suivre redirections (308)
+        const configuration = new Configuration({
+          accessToken: token,
         });
 
-        if (!response.ok) {
-          throw new Error(`Erreur login: ${response.status}`);
-        }
+        const paramCreator = LogApiAxiosParamCreator(configuration);
+        const { url, options } = await paramCreator.logsGetCollection(1);
 
-        const data: LoginResponse = await response.json();
+        const response = await axios.request({
+          ...options,
+          url: `http://127.0.0.1:8080${url}`, // adapte selon ton API
+        });
 
-        if (!data.token) {
-          throw new Error('Token JWT manquant');
-        }
-
-        setToken(data.token);
-        setMessage('Connexion réussie');
-      } catch (error: any) {
-        setMessage(`Erreur : ${error.message || error.toString()}`);
+        setProfile(response.data);
+      } catch (err: any) {
+        setError(
+          err?.response?.data?.detail ||
+            'Erreur lors de la récupération du profil'
+        );
       }
     };
 
-    login();
+    fetchSelf();
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Test Connexion API</h1>
-      <p>{message}</p>
-      {token && (
-        <pre
-          style={{
-            background: '#eee',
-            padding: 10,
-            borderRadius: 5,
-            wordBreak: 'break-all',
-          }}
-        >
-          {token}
+    <div className='p-4 text-white'>
+      <h1 className='text-2xl font-bold mb-4'>👤 Profil Utilisateur</h1>
+      {error && <p className='text-red-500'>❌ {error}</p>}
+      {profile ? (
+        <pre className='bg-gray-800 p-4 rounded-lg overflow-x-auto'>
+          {JSON.stringify(profile, null, 2)}
         </pre>
-      )}
+      ) : !error ? (
+        <p>Chargement...</p>
+      ) : null}
     </div>
   );
 }

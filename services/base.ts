@@ -16,10 +16,20 @@
 import type { Configuration } from './configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 
-export const BASE_PATH = "http://localhost".replace(/\/+$/, "");
+export const BASE_PATH = (typeof window === 'undefined') ? `${process.env.API_INTERNAL_URL}`.replace(/\/+$/, "") : `${process.env['NEXT_PUBLIC_API_PUBLIC_URL']}`.replace(/\/+$/, "");
+
+export function getUri(uri: string): string {
+    const url = new URL(BASE_PATH);
+
+    if (url.pathname !== '/') {
+        return url.pathname + uri;
+    } else {
+        return uri;
+    }
+}
 
 /**
  *
@@ -39,7 +49,7 @@ export const COLLECTION_FORMATS = {
  */
 export interface RequestArgs {
     url: string;
-    options: RawAxiosRequestConfig;
+    options: AxiosRequestConfig;
 }
 
 /**
@@ -53,7 +63,7 @@ export class BaseAPI {
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected axios: AxiosInstance = globalAxios) {
         if (configuration) {
             this.configuration = configuration;
-            this.basePath = configuration.basePath ?? basePath;
+            this.basePath = configuration.basePath || this.basePath;
         }
     }
 };
@@ -69,18 +79,4 @@ export class RequiredError extends Error {
         super(msg);
         this.name = "RequiredError"
     }
-}
-
-interface ServerMap {
-    [key: string]: {
-        url: string,
-        description: string,
-    }[];
-}
-
-/**
- *
- * @export
- */
-export const operationServerMap: ServerMap = {
 }

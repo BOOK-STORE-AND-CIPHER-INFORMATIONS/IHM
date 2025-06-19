@@ -8,7 +8,10 @@ const nextConfig: NextConfig = {
         source: '/api/:path*',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: '*' }, // ⚠️ À remplacer par l'URL du front en prod (ex: http://localhost:3001)
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'http://localhost:3000',
+          },
           {
             key: 'Access-Control-Allow-Methods',
             value: 'GET,DELETE,PATCH,POST,PUT,OPTIONS',

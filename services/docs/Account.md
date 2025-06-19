@@ -6,6 +6,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **string** |  | [default to undefined]
 **username** | **string** |  | [default to undefined]
 **password** | **string** |  | [default to undefined]
 **ipAddress** | **string** |  | [default to undefined]
@@ -19,6 +20,7 @@ Name | Type | Description | Notes
 import { Account } from './api';
 
 const instance: Account = {
+    id,
     username,
     password,
     ipAddress,

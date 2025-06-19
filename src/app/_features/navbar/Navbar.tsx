@@ -2,31 +2,46 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+
+// Fonction pour décoder un token JWT
+function parseJwt(token: string) {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+}
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [mounted, setMounted] = useState(false); // nouveau état
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
+
     if (typeof window !== 'undefined') {
-      const auth = localStorage.getItem('auth');
-      setIsLoggedIn(auth === 'true');
+      const token = localStorage.getItem('token');
+      if (token) {
+        setIsLoggedIn(true);
+        const payload = parseJwt(token);
+        const roles: string[] = payload?.roles || [];
+        setIsAdmin(roles.includes('ROLE_ADMIN'));
+      }
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('auth');
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
+    setIsAdmin(false);
     router.push('/');
   };
 
-  if (!mounted) {
-    // Ne rien afficher tant que ce n’est pas monté côté client (prévenir erreur de SSR)
-    return null;
-  }
+  if (!mounted) return null;
 
   return (
     <nav className='bg-gray-800 text-white p-4 flex justify-between items-center'>
@@ -36,32 +51,17 @@ export default function Navbar() {
           alt='Logo'
           className='w-10 h-10 rounded-full'
         />
-        <Link href='/users' className='text-xl font-bold'>
+        <Link href='/' className='text-xl font-bold'>
           IHM
         </Link>
       </div>
 
       <div className='space-x-4 flex items-center'>
-        <Link href='/users' className='hover:underline'>
-          Users
-        </Link>
-        <Link href='/books' className='hover:underline'>
-          Books
-        </Link>
-        <Link href='/rents' className='hover:underline'>
-          Rents
-        </Link>
-        <Link href='/logs' className='hover:underline'>
-          Logs
-        </Link>
-        <Link href='/create-profile' className='hover:underline'>
-          Dashboard
-        </Link>
-
-        {isLoggedIn && (
+        {/* ✅ Affiche le bouton uniquement sur /logs */}
+        {pathname === '/logs' && (
           <button
             onClick={handleLogout}
-            className='ml-4 bg-red-600 hover:bg-red-700 px-3 py-1 rounded'
+            className='bg-red-600 hover:bg-red-700 px-3 py-1 rounded'
           >
             Se déconnecter
           </button>

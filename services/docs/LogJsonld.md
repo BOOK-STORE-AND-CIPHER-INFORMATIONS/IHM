@@ -6,7 +6,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**context** | [**AccountJsonldContext**](AccountJsonldContext.md) |  | [optional] [default to undefined]
 **id** | **string** |  | [optional] [readonly] [default to undefined]
 **type** | **string** |  | [optional] [readonly] [default to undefined]
 **id** | **string** |  | [default to undefined]
@@ -21,7 +20,6 @@ Name | Type | Description | Notes
 import { LogJsonld } from './api';
 
 const instance: LogJsonld = {
-    context,
     id,
     type,
     id,
