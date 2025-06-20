@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Configuration, LogApiAxiosParamCreator } from '../../../../services';
+import type { AxiosRequestConfig } from 'axios';
+import { Configuration, LogApi, LogApiAxiosParamCreator } from '../../../../services';
 
 export default function SelfProfile() {
   const [profile, setProfile] = useState<any>(null);
@@ -17,17 +18,14 @@ export default function SelfProfile() {
       }
 
       try {
-        const configuration = new Configuration({
-          accessToken: token,
-        });
-
-        const paramCreator = LogApiAxiosParamCreator(configuration);
-        const { url, options } = await paramCreator.logsGetCollection(1);
-
-        const response = await axios.request({
-          ...options,
-          url: `http://127.0.0.1:8080${url}`, // adapte selon ton API
-        });
+        const logApi = new LogApi()
+        const conf: AxiosRequestConfig = {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          }
+        };
+        const response = await logApi.logsGetCollection(1, conf);
 
         setProfile(response.data);
       } catch (err: any) {
