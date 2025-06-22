@@ -1,18 +1,20 @@
 import type { NextConfig } from 'next';
+import webpack from 'webpack';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-
+  env: {
+    NEXT_PUBLIC_APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION,
+  },
   async headers() {
     return [
       {
-        // Toutes les routes API
         source: '/api/:path*',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'http://localhost:3000',
+            value: 'http://localhost:8080',
           },
           {
             key: 'Access-Control-Allow-Methods',
@@ -26,6 +28,22 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+  },
+  webpack: (config, { isServer }) => {
+    const envs: Record<string, string> = {};
+    Object.keys(process.env).forEach(env => {
+      if (env.startsWith('NEXT_PUBLIC_')) {
+        envs[env] = process.env[env] as string;
+      }
+    });
+    if (!isServer) {
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          'process.env': JSON.stringify(envs),
+        })
+      );
+    }
+    return config;
   },
 };
 
