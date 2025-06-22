@@ -1,5 +1,3 @@
-import { Json } from './Json';
-
 export type Log = {
   '@id': string;
   '@type': string;
