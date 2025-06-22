@@ -43,8 +43,6 @@ export default function Rents() {
           'page'
         );
         setTotalPages(p ? parseInt(p, 10) : 1);
-      } catch (err: any) {
-        setError(err?.response?.data?.detail || 'Erreur de récupération');
       } finally {
         setIsLoading(false);
       }

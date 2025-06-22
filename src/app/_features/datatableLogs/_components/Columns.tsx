@@ -1,5 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Log } from '../schemas/Log';
+import { Json } from '../schemas/Json';
 
 export const columns: ColumnDef<Log>[] = [
   {
@@ -21,7 +22,7 @@ export const columns: ColumnDef<Log>[] = [
     header: 'Données',
     cell: ({ getValue }) => (
       <pre className='whitespace-pre-wrap text-sm'>
-        {JSON.stringify(getValue<any>(), null, 2)}
+        {JSON.stringify(getValue<Json>(), null, 2)}
       </pre>
     ),
   },

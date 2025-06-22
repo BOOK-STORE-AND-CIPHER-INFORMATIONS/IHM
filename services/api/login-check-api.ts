@@ -30,14 +30,7 @@ import {
   createRequestFunction,
 } from '../common';
 // @ts-ignore
-import {
-  BASE_PATH,
-  COLLECTION_FORMATS,
-  type RequestArgs,
-  BaseAPI,
-  RequiredError,
-  operationServerMap,
-} from '../base';
+import { BASE_PATH, type RequestArgs, BaseAPI } from '../base';
 // @ts-ignore
 import type { LoginCheckPost200Response } from '../models';
 // @ts-ignore
@@ -139,11 +132,7 @@ export const LoginCheckApiFp = function (configuration?: Configuration) {
         loginCheckPostRequest,
         options
       );
-      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap['LoginCheckApi.checkPost']?.[
-          localVarOperationServerIndex
-        ]?.url;
+      const localVarOperationServerBasePath = BASE_PATH;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,

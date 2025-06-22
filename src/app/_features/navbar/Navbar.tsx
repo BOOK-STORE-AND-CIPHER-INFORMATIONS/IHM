@@ -4,17 +4,15 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
-// Fonction pour décoder un token JWT
 function parseJwt(token: string) {
   try {
     return JSON.parse(atob(token.split('.')[1]));
-  } catch (e) {
+  } catch {
     return null;
   }
 }
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -26,7 +24,6 @@ export default function Navbar() {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
       if (token) {
-        setIsLoggedIn(true);
         const payload = parseJwt(token);
         const roles: string[] = payload?.roles || [];
         setIsAdmin(roles.includes('ROLE_ADMIN'));
@@ -36,7 +33,6 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
     setIsAdmin(false);
     router.push('/');
   };
@@ -57,8 +53,8 @@ export default function Navbar() {
       </div>
 
       <div className='space-x-4 flex items-center'>
-        {/* ✅ Affiche le bouton uniquement sur /logs */}
-        {pathname === '/logs' && (
+        {/* Affiche le bouton uniquement sur /logs ET si admin */}
+        {pathname === '/logs' && isAdmin && (
           <button
             onClick={handleLogout}
             className='bg-red-600 hover:bg-red-700 px-3 py-1 rounded'

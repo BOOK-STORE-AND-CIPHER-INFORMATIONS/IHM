@@ -11,7 +11,6 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   flexRender,
-  ColumnDef,
 } from '@tanstack/react-table';
 import {
   Table,

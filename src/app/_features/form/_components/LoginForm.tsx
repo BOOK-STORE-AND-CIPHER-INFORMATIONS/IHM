@@ -16,8 +16,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { loginFormSchema, type LoginFormValues } from '../schemas/loginSchema';
-
-const API_URL = 'http://127.0.0.1:8080';
+import {
+  LoginCheckApi,
+  LoginCheckApiCheckPostRequest,
+} from 'services/api/login-check-api';
 
 interface LoginResponse {
   token: string;
@@ -45,17 +47,17 @@ export function LoginForm() {
   async function onSubmit(values: LoginFormValues) {
     setError(null);
     try {
-      const res = await fetch(`${API_URL}/api/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-      });
+      const api = new LoginCheckApi();
 
-      const data: LoginResponse = await res.json();
+      const payload: LoginCheckApiCheckPostRequest = {
+        loginCheckPostRequest: {
+          username: values.username,
+          password: values.password,
+        },
+      };
 
-      if (!res.ok) {
-        throw new Error(data?.message || 'Identifiants invalides');
-      }
+      const response = await api.checkPost(payload);
+      const data: LoginResponse = response.data;
 
       if (!data.token || !data.roles) {
         throw new Error('Réponse invalide du serveur.');
@@ -63,17 +65,18 @@ export function LoginForm() {
 
       const isAdmin = data.roles.includes('ROLE_ADMIN');
       if (!isAdmin) {
-        throw new Error(
-          "Vous n'avez pas l'autorisation d'accéder à cette interface."
-        );
+        throw new Error("Vous n'avez pas l'autorisation");
       }
 
-      // ✅ Stocker le token seulement si ROLE_ADMIN
       localStorage.setItem('token', data.token);
-      router.replace('/logs'); // ← évite l'historique inutile
-      router.refresh(); // ← rafraîchit les composants côté client
-    } catch (err: any) {
-      setError(err.message || 'Erreur de connexion');
+      router.replace('/logs');
+      router.refresh();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Erreur inconnue');
+      }
     }
   }
 
@@ -94,7 +97,7 @@ export function LoginForm() {
           name='username'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nom d'utilisateur</FormLabel>
+              <FormLabel>Nom d&apos;utilisateur</FormLabel>
               <FormControl>
                 <Input placeholder='username' disabled={!isReady} {...field} />
               </FormControl>
