@@ -1,23 +1,20 @@
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { Log } from '../schemas/Log';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { ColumnDef, flexRender, Table } from '@tanstack/react-table';
+import { flexRender, Table } from '@tanstack/react-table';
 
-type TableResultsProps = {
+interface TableResultsProps {
   table: Table<Log>;
   router: AppRouterInstance;
-  columns: ColumnDef<Log>[];
-};
+}
 
-export default function TableResults({
-  table,
-  router,
-  columns,
-}: TableResultsProps) {
+export default function TableResults({ table }: TableResultsProps) {
+  const rows = table.getRowModel().rows;
+
   return (
     <TableBody>
-      {table.getRowModel().rows?.length ? (
-        table.getRowModel().rows.map((row) => (
+      {rows.length ? (
+        rows.map((row) => (
           <TableRow
             key={row.id}
             data-state={row.getIsSelected() && 'selected'}
@@ -32,8 +29,11 @@ export default function TableResults({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={columns.length} className='h-24 text-center'>
-            No results.
+          <TableCell
+            colSpan={table.getAllColumns().length}
+            className='h-24 text-center'
+          >
+            Aucun log trouvé.
           </TableCell>
         </TableRow>
       )}

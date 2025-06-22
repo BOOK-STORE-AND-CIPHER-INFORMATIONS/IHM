@@ -1,12 +1,11 @@
+// src/_features/datatableLogs/_components/Pagination.tsx
 import { Table } from '@tanstack/react-table';
-import { Conversation } from '../schemas/RentUser';
 import { Button } from '@/components/ui/button';
+import type { Log } from '../schemas/Log';
 
-type PaginationProps = {
-  table: Table<Conversation>;
-};
+type Props = { table: Table<Log> };
 
-export default function Pagination({ table }: PaginationProps) {
+export default function Pagination({ table }: Props) {
   return (
     <div className='flex items-center justify-center space-x-2 py-4'>
       <Button
@@ -15,18 +14,18 @@ export default function Pagination({ table }: PaginationProps) {
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
       >
-        Previous
+        Précédent
       </Button>
-      <p>
+      <span>
         {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
-      </p>
+      </span>
       <Button
         variant='outline'
         size='sm'
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
       >
-        Next
+        Suivant
       </Button>
     </div>
   );

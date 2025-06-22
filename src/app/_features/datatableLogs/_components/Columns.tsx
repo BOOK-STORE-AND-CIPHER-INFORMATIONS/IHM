@@ -1,66 +1,28 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Log } from '../schemas/Log';
-import { Button } from '@/components/ui/button';
-import { ArrowUpDown, MoreHorizontal, X } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 export const columns: ColumnDef<Log>[] = [
   {
-    accessorKey: 'username',
-    header: 'Username',
-    cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('username')}</div>
-    ),
+    accessorKey: 'account',
+    header: 'Compte',
+    cell: ({ getValue }) => getValue<string>()?.split('/').pop() ?? '—',
   },
   {
-    accessorKey: 'currentDate',
-    header: 'Current Date',
-    cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('currentDate')}</div>
-    ),
+    accessorKey: 'createdAt',
+    header: 'Date',
+    cell: ({ getValue }) => new Date(getValue<string>()).toLocaleString(),
   },
   {
-    accessorKey: 'transactionType',
-    header: 'Transaction Type',
-    cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('transactionType')}</div>
-    ),
+    accessorKey: 'type',
+    header: 'Méthode + Endpoint',
   },
   {
-    accessorKey: 'dateExchanged',
-    header: 'Date Exchanged',
-    cell: ({ row }) => (
-      <div className='capitalize'>{row.getValue('dateExchanged')}</div>
+    accessorKey: 'data',
+    header: 'Données',
+    cell: ({ getValue }) => (
+      <pre className='whitespace-pre-wrap text-sm'>
+        {JSON.stringify(getValue<any>(), null, 2)}
+      </pre>
     ),
-  },
-  {
-    id: 'actions',
-    enableHiding: false,
-    cell: ({ row }) => {
-      const Profil = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='h-8 w-8 p-0'>
-              <span className='sr-only'>Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className='text-red-600 hover:text-white hover:bg-red-600 focus:bg-red-600 focus:text-white font-semibold'>
-              Signal
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
   },
 ];

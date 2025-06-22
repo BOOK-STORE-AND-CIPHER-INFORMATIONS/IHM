@@ -1,7 +1,10 @@
+// src/schemas/Log.ts
 export type Log = {
+  "@id": string;
+  "@type": string;
   id: string;
-  username: string;
-  currentDate: string;
-  transactionType: string;
-  dateExchanged: string;
+  account?: string;
+  createdAt: string;
+  type: string;
+  data: any;
 };

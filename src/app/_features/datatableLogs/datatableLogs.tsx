@@ -1,86 +1,131 @@
 'use client';
-
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import {
   ColumnFiltersState,
+  PaginationState,
   SortingState,
   VisibilityState,
-  flexRender,
+  useReactTable,
   getCoreRowModel,
+  getSortedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
+  flexRender,
+  ColumnDef,
 } from '@tanstack/react-table';
-import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { data } from './data/Log';
-import Pagination from './_components/Pagination';
+import {
+  Table,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableBody,
+  TableCell,
+} from '@/components/ui/table';
 import Filters from './_components/Filters';
-import TableResults from './_components/TableResults';
+import Pagination from './_components/Pagination';
 import { columns } from './_components/Columns';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
-import { Card, CardContent } from '@/components/ui/card';
+import type { Log } from './schemas/Log';
 
-export function DatatableLogs() {
+type Props = {
+  data: Log[];
+  page: number; // 0-based
+  pageCount: number;
+  onPageChange: (pageIndex: number) => void;
+};
+
+export function DatatableLogs({ data, page, pageCount, onPageChange }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [messages, setMessages] = React.useState<any[]>([]); // <- maintenant dynamique
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: page,
+    pageSize: 30,
+  });
+
+  React.useEffect(() => {
+    setPagination({ pageIndex: page, pageSize: 30 });
+  }, [page]);
 
   const table = useReactTable({
     data,
     columns,
+    state: { sorting, columnFilters, columnVisibility, pagination },
+    manualPagination: true,
+    pageCount,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: (updaterOrValue) => {
+      const newPagination: PaginationState =
+        typeof updaterOrValue === 'function'
+          ? (updaterOrValue as (old: PaginationState) => PaginationState)(
+              pagination
+            )
+          : updaterOrValue;
+
+      setPagination(newPagination);
+      if (newPagination.pageIndex !== page) {
+        onPageChange(newPagination.pageIndex);
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
-  const router = useRouter();
-
   return (
-    <div className='flex flex-col md:flex-row w-full justify-between gap-8'>
-      <div className='w-full'>
-        <Filters table={table} />
-        <div className='rounded-md border'>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+    <div className='flex flex-col w-full'>
+      <Filters table={table} />
+      <div className='border rounded-md overflow-auto'>
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((hg) => (
+              <TableRow key={hg.id}>
+                {hg.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length > 0 ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableResults table={table} router={router} columns={columns} />
-          </Table>
-        </div>
-        <Pagination table={table} />
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  Aucun log trouvé.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
+      <Pagination table={table} />
     </div>
   );
 }
