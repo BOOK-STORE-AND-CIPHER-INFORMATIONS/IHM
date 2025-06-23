@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { BASE_PATH } from 'services/base';
 import webpack from 'webpack';
 
 const nextConfig: NextConfig = {
@@ -14,7 +15,7 @@ const nextConfig: NextConfig = {
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'http://localhost:8080',
+            value: `${BASE_PATH}`,
           },
           {
             key: 'Access-Control-Allow-Methods',
@@ -31,7 +32,7 @@ const nextConfig: NextConfig = {
   },
   webpack: (config, { isServer }) => {
     const envs: Record<string, string> = {};
-    Object.keys(process.env).forEach(env => {
+    Object.keys(process.env).forEach((env) => {
       if (env.startsWith('NEXT_PUBLIC_')) {
         envs[env] = process.env[env] as string;
       }
